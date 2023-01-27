@@ -243,7 +243,7 @@ class GaussianDiffusion:
         """
         assert "input_ids" in model_kwargs
         input_ids = model_kwargs.pop("input_ids").to(t.device)
-        x_start_mean = model.model.module.get_embeds(input_ids)
+        x_start_mean = model.model.get_embeds(input_ids)
 
         std = _extract_into_tensor(
             self.sqrt_one_minus_alphas_cumprod,
@@ -256,7 +256,7 @@ class GaussianDiffusion:
         if noise is None:
             noise = th.randn_like(x_start)
         x_t = self.q_sample(x_start, t, noise=noise)  # reparametrization trick.
-        get_logits = model.model.module.get_logits
+        get_logits = model.model.get_logits
 
         terms = {}
 
