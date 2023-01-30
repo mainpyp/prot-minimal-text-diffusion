@@ -93,7 +93,7 @@ def model_and_diffusion_defaults():
 
 def decoding_defaults():
     return dict(
-        num_samples=50,
+        num_samples=162,
         top_p=0.9,
         out_dir="",
         model_name_or_path="",
