@@ -13,7 +13,7 @@ LR=${7:-0.0001}
 DIFFUSION_STEPS=${8:-2000}
 NOISE_SCHEDULE=${9:-sqrt}
 BATCH_SIZE=${10:-64}
-SEQ_LEN=${11:-50}
+SEQ_LEN=${11:-256}
 
 CHECKPOINT_PATH=${12:-"ckpts/${DSET}"}
 TRAIN_TXT_PATH=${13:-data/${DSET}-train.txt}
