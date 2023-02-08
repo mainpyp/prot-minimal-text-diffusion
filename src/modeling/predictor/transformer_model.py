@@ -41,7 +41,7 @@ class TransformerNetModel(nn.Module):
         use_checkpoint=False,
         num_heads=1,
         config=None,
-        config_name="bert-base-uncased",
+        config_name="Rostlab/prot_bert",
         vocab_size=None,
         logits_mode=1,
     ):

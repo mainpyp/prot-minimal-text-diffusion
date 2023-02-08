@@ -23,7 +23,7 @@ WEIGHT_DECAY=${16:-0.0}
 SEED=${17:-10708}
 DROPOUT=${18:-0.1}
 NUM_HEADS=${19:-4}
-CONFIG_NAME=${20:-"bert-base-uncased"}
+CONFIG_NAME=${20:-"Rostlab/prot_bert"}
 
 
 NOTES=${18:-"Pre-trained models, pre-trained embeddings, embeddings not frozen"}
