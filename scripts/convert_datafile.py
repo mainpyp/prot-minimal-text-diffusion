@@ -13,7 +13,7 @@ parser.add_argument('--whitespace', default=True, type=bool)
 
 def convert(project_name: str, path:str, whitespace:bool):
     df = pd.read_csv(path, sep=",")
-    name = path.split(".")[0]
+    name = path.split("/")[-1].split(".")[0]
 
     with open(f"{project_name}-{name}.txt", "w+") as file:
         for index, (columns, row) in enumerate(df.iterrows()):
