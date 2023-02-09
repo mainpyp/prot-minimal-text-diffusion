@@ -150,9 +150,9 @@ def train_word_level_tokenizer(
 
     tokenizer.enable_truncation(max_length=512)
 
-    print(tokenizer.encode("the red.").ids)
+    print(tokenizer.encode("A D R I A N").ids)
 
-    print(tokenizer.encode("the red."))
+    print(tokenizer.encode("A D R I A N"))
 
     tokenizer.save(f"{str(pathlib.Path(path).parent)}/word-level-vocab.json")
 
