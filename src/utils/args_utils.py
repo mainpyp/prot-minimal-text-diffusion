@@ -82,7 +82,7 @@ def model_and_diffusion_defaults():
         in_channel=16,
         out_channel=16,
         vocab_size=66,
-        config_name="Rostlab/prot_bert",
+        config_name="bert-base-uncased",
         logits_mode=1,
         training_mode="diffusion-lm",
         init_pretrained=False,

@@ -190,7 +190,7 @@ def train_classifier_on_diffusion_latents():
     )
 
     # Step 4: create the classifier
-    config = BertConfig.from_pretrained("Rostlab/prot_bert")
+    config = BertConfig.from_pretrained("bert-base-uncased")
     config.train_diffusion_steps = args.diffusion_steps
     config.embedding_dim = args.in_channel
     config.vocab_size = tokenizer.vocab_size
@@ -358,7 +358,7 @@ def unit_data_for_text_classification(train_epochs=50):
 
     data.to_csv("ipynb/food_reviews.csv", index=False)
 
-    tokenizer = AutoTokenizer.from_pretrained("Rostlab/prot_bert")
+    tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
 
     data = data.sample(frac=1).reset_index(drop=True)
     sentences = data["sentence"].tolist()
@@ -368,7 +368,7 @@ def unit_data_for_text_classification(train_epochs=50):
         "input_ids"
     ]
 
-    config = BertConfig.from_pretrained("Rostlab/prot_bert")
+    config = BertConfig.from_pretrained("bert-base-uncased")
     config.train_diffusion_steps = 200
     config.embedding_dim = 128
 
