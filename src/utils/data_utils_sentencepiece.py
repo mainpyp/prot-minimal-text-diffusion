@@ -48,19 +48,22 @@ class TextDataset(Dataset):
         logging.info("Reading data from {}".format(self.data_path))
         data = pd.read_csv(self.data_path, sep="\t", header=None)  # read text file
         logging.info(f"Tokenizing {len(data)} sentences")
-
+        print("Start converting to lists")
         self.text = data[0].apply(lambda x: x.strip()).tolist()
         # encoded_input = self.tokenizer(self.questions, self.paragraphs)
-        
+        print("End converting to lists")
         # check if tokenizer has a method 'encode_batch'
+        print("Start tokenizing")
         if hasattr(self.tokenizer, 'encode_batch'):
-
+            print("encode_batch")
             encoded_input = self.tokenizer.encode_batch(self.text)
             self.input_ids = [x.ids for x in encoded_input]
         
         else:
+            print("not encode_batch")
             encoded_input = self.tokenizer(self.text)
             self.input_ids = encoded_input["input_ids"]
+        print("End tokenizing")
 
     def read_labels(self):
         self.labels = pd.read_csv(self.data_path, sep="\t", header=None)[1].tolist()
