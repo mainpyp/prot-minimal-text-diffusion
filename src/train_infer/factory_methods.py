@@ -47,6 +47,7 @@ def create_model_and_diffusion(
         freeze_embeddings=freeze_embeddings,
         use_pretrained_embeddings=use_pretrained_embeddings,
     )
+
     diffusion = create_gaussian_diffusion(
         steps=diffusion_steps,
         learn_sigma=learn_sigma,
@@ -94,7 +95,6 @@ def create_model(
         init_pretrained=init_pretrained,
         use_pretrained_embeddings=use_pretrained_embeddings,
         freeze_embeddings=freeze_embeddings,
-        
     )
 
 

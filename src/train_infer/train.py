@@ -46,12 +46,9 @@ def main():
         max_seq_len=args.sequence_len
     )
 
-
     args.vocab_size = tokenizer.vocab_size
 
     logger.log("creating model and diffusion...")
-    
-
 
     model, diffusion = create_model_and_diffusion(
         **args_to_dict(args, model_and_diffusion_defaults().keys())
