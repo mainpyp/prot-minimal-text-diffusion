@@ -12,7 +12,7 @@ logging.basicConfig(level=logging.INFO)
 def create_tokenizer(return_pretokenized, path, tokenizer_type: str = "word-level"):
     if return_pretokenized:
         tokenizer = AutoTokenizer.from_pretrained("Rostlab/prot_bert")
-        return tokenizers
+        return tokenizer
 
     if tokenizer_type == "byte-level":
         return read_byte_level(path)
