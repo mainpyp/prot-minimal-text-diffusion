@@ -1,0 +1,2 @@
+export PYTHONPATH=".:../:.:src"
+bash scripts/run_train.sh prot_medium 0 False False False 5000
