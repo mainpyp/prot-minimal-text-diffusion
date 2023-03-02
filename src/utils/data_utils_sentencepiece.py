@@ -56,7 +56,12 @@ class TextDataset(Dataset):
         print("Start tokenizing")
         if hasattr(self.tokenizer, 'encode_batch'):
             print("encode_batch")
-            encoded_input = self.tokenizer.batch_enocde_plus(self.text)
+            encoded_input = self.tokenizer.encode_batch(self.text)
+            self.input_ids = [x.ids for x in encoded_input]
+
+        elif hasattr(self.tokenizer, 'batch_encode_plus'):
+            print("batch_encode_plus")
+            encoded_input = self.tokenizer.batch_encode_plus(self.text)
             self.input_ids = [x.ids for x in encoded_input]
         
         else:
