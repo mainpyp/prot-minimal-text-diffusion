@@ -1,2 +1,5 @@
+cd repositories/prot-minimal-text-diffusion/
 export PYTHONPATH=".:../:.:src"
-bash scripts/run_train.sh prot_medium 0 False False False 5000
+conda activate henkel_diffusion
+bash scripts/run_train.sh prot_total 0 True True   False 50
+
