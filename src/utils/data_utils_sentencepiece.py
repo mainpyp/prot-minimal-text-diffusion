@@ -59,15 +59,16 @@ class TextDataset(Dataset):
             encoded_input = self.tokenizer.encode_batch(self.text)
             self.input_ids = [x.ids for x in encoded_input]
 
-        elif hasattr(self.tokenizer, 'batch_encode_plus'):
-            print("batch_encode_plus")
-            encoded_input = self.tokenizer.batch_encode_plus(self.text)
-            self.input_ids = [x.ids for x in encoded_input]
+        # elif hasattr(self.tokenizer, 'batch_encode_plus'):
+        #     print("batch_encode_plus")
+        #     encoded_input = self.tokenizer.batch_encode_plus(self.text)
+        #     self.input_ids = [x.ids for x in encoded_input]
         
         else:
             print("not encode_batch")
-            encoded_input = self.tokenizer(self.text)
-            self.input_ids = encoded_input["input_ids"]
+            self.input_ids = self.tokenizer.encode(self.text)
+            # encoded_input = self.tokenizer(self.text)
+            # self.input_ids = encoded_input["input_ids"]
         print("End tokenizing")
 
     def read_labels(self):
