@@ -1,3 +1,4 @@
+import datasets
 import sys
 from transformers import AutoTokenizer
 import pandas as pd
@@ -52,7 +53,8 @@ if __name__ == "__main__":
 
     print("saved paths")
 
-    import datasets
+
+
     print("load datasets as raw")
     raw_datasets = datasets.load_dataset("csv", data_files=data_files)
 
