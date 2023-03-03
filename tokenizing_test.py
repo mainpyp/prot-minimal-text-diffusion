@@ -56,7 +56,7 @@ if __name__ == "__main__":
 
 
     print("load datasets as raw")
-    raw_datasets = datasets.load_dataset("csv", data_files=data_files)
+    raw_datasets = datasets.load_dataset("csv", data_files=paths)
 
     print("process datasets")
     processed_datasets = raw_datasets.map(
