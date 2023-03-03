@@ -71,7 +71,7 @@ class TextDataset(Dataset):
             encoded_input = self.tokenizer(self.text)
             self.input_ids = encoded_input["input_ids"]
 
-            print(f"Keys: {encoded_input.keys()}\n"
+            print(f"Type enc input: {type(encoded_input)}\n"
                   f"Len input ids: {len(self.input_ids['input_ids'])}\n"
                   f"Getsizeof input ids: {sys.getsizeof(self.input_ids)}\n"
                   f"Getsizeof encoded: {sys.getsizeof(encoded_input)}\n"
