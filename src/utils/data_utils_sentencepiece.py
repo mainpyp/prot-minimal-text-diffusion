@@ -66,9 +66,18 @@ class TextDataset(Dataset):
         
         else:
             print("not encode_batch")
-            self.input_ids = self.tokenizer.encode([t[0] for t in self.text])
-            # encoded_input = self.tokenizer(self.text)
-            # self.input_ids = encoded_input["input_ids"]
+            import sys
+            #self.input_ids = self.tokenizer.encode([t[0] for t in self.text])
+            encoded_input = self.tokenizer(self.text)
+            self.input_ids = encoded_input["input_ids"]
+            
+            print(f"Keys: {self.input_ids.keys()}\n"
+                  f"Len input ids: {len(self.input_ids['input_ids'])}\n"
+                  f"Getsizeof input ids: {sys.getsizeof(self.input_ids)}\n"
+                  f"Getsizeof encoded: {sys.getsizeof(encoded_input)}\n"
+                  f"Getsizeof data(frame): {sys.getsizeof(data)}\n"
+                  f"Type input ids: {type(self.input_ids)}")
+
         print("End tokenizing")
 
     def read_labels(self):
