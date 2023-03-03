@@ -27,6 +27,7 @@ def get_dataloader(tokenizer, data_path, batch_size, max_seq_len):
 
     while True:
         for batch in dataloader:
+            batch = tokenizer(batch)
             yield batch
 
 
@@ -68,8 +69,8 @@ class TextDataset(Dataset):
             print("not encode_batch")
             import sys
             #self.input_ids = self.tokenizer.encode([t[0] for t in self.text])
-            encoded_input = self.tokenizer(self.text)
-            self.input_ids = encoded_input["input_ids"]
+            #encoded_input = self.tokenizer(self.text)
+            #self.input_ids = encoded_input["input_ids"]
             from pympler.asizeof import asizeof
 
             def get_disc_size_gb(obj):
@@ -110,7 +111,7 @@ class TextDataset(Dataset):
 
     def __getitem__(self, i):
         out_dict = {
-            "input_ids": self.input_ids[i],
+            "input_ids": self.text[i],
             # "attention_mask": [1] * len(self.input_ids[i]),
         }
         if hasattr(self, "labels"):
