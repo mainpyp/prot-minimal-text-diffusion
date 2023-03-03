@@ -77,12 +77,12 @@ class TextDataset(Dataset):
 
             print(f"Type enc input: {type(encoded_input)}\n"
                   f"Len input ids: {len(encoded_input['input_ids'])}\n"
-                  f"Getsizeof input ids: {get_disc_size_gb(self.input_ids)}\n"
+                  f"Getsizeof input ids: {get_disc_size_gb(encoded_input['input_ids'])}\n"
                   f"Getsizeof token_type_ids: {get_disc_size_gb(encoded_input['token_type_ids'])}\n"
                   f"Getsizeof attention_mask: {get_disc_size_gb(encoded_input['attention_mask'])}\n"
-                  f"Getsizeof input ids: {get_disc_size_gb(self.input_ids)}\n"
                   f"Getsizeof encoded: {get_disc_size_gb(encoded_input)}\n"
                   f"Getsizeof data(frame): {get_disc_size_gb(data)}\n"
+                  f"Getsizeof text: {get_disc_size_gb(self.text)}\n"
                   f"Type input ids: {type(self.input_ids)}")
             sys.exit(0)
 
