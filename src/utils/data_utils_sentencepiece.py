@@ -111,7 +111,7 @@ class TextDataset(Dataset):
 
     def __getitem__(self, i):
         out_dict = {
-            "input_ids": self.text[i],
+            "input_ids": self.input_ids[i],
             # "attention_mask": [1] * len(self.input_ids[i]),
         }
         if hasattr(self, "labels"):
