@@ -66,7 +66,7 @@ class TextDataset(Dataset):
         
         else:
             print("not encode_batch")
-            self.input_ids = self.tokenizer.encode(self.text)
+            self.input_ids = self.tokenizer.encode([t[0] for t in self.text])
             # encoded_input = self.tokenizer(self.text)
             # self.input_ids = encoded_input["input_ids"]
         print("End tokenizing")
