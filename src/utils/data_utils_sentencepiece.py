@@ -76,9 +76,6 @@ class TextDataset(Dataset):
             def get_disc_size_gb(obj):
                 return asizeof(obj) / 8 / 1_000 / 1_000
 
-            print("IMPORTING ACCELERATE")
-            import accelerate
-
             print(f"Type enc input: {type(encoded_input)}\n"
                   f"Len input ids: {len(encoded_input['input_ids'])}\n"
                   f"Getsizeof input ids: {get_disc_size_gb(encoded_input['input_ids'])}\n"
@@ -88,7 +85,7 @@ class TextDataset(Dataset):
                   f"Getsizeof data(frame): {get_disc_size_gb(data)}\n"
                   f"Getsizeof text: {get_disc_size_gb(self.text)}\n"
                   f"Type input ids: {type(self.input_ids)}")
-            sys.exit(0)
+            #sys.exit(0)
 
         print("End tokenizing")
 
