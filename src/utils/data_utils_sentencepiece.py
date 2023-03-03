@@ -84,6 +84,7 @@ class TextDataset(Dataset):
                   f"Getsizeof encoded: {get_disc_size_gb(encoded_input)}\n"
                   f"Getsizeof data(frame): {get_disc_size_gb(data)}\n"
                   f"Type input ids: {type(self.input_ids)}")
+            sys.exit(0)
 
         print("End tokenizing")
 
