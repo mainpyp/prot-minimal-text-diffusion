@@ -15,7 +15,7 @@ def main(data_path: str):
     
     print(sys.getsizeof(text)/8/1_000_000)
     print("encoding whole dataset")
-    encoded = tokenizer(text_target=text, max_length=512, padding=True, truncation=True)
+    encoded = tokenizer(text=text, max_length=512, padding=True, truncation=True)
     print("encoding done")
     print(f"{sys.getsizeof(encoded)}")
 
