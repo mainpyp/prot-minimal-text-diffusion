@@ -17,7 +17,7 @@ def main(data_path: str):
     print("encoding whole dataset")
 
 
-    encoded = [tokenizer(t) for t in text]
+    encoded = tokenizer(text, padding=True, return_tensor="pt")
 
 
 def preprocess_function(examples):
@@ -40,14 +40,14 @@ def preprocess_function(examples):
     return model_inputs
 
 if __name__ == "__main__":
-    # data_path = "data/prot_total/prot_total.txt"
-    # main(data_path)
-    from datasets import load_dataset
-
-    data_path = "data/prot_minimal/prot_minimal.txt"
-
-    raw_datasets = load_dataset("csv", data_files=data_path)
-    print(raw_datasets)
+    data_path = "data/prot_total/prot_total.txt"
+    main(data_path)
+    # from datasets import load_dataset
+    #
+    # data_path = "data/prot_minimal/prot_minimal.txt"
+    #
+    # raw_datasets = load_dataset("csv", data_files=data_path)
+    # print(raw_datasets)
     # processed_datasets = raw_datasets.map(
     #     preprocess_function,
     #     batched=True,
