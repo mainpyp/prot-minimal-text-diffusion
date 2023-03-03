@@ -15,9 +15,9 @@ def main(data_path: str):
     
     print(sys.getsizeof(text)/8/1_000_000)
     print("encoding whole dataset")
-
-
-    encoded = tokenizer(text, padding=True, return_tensor="pt")
+    encoded = tokenizer(text_target=text, max_length=512, padding=padding, truncation=True)
+    print("encoding done")
+    print(f"{sys.getsizeof(encoded)}")
 
 
 def preprocess_function(examples):
@@ -51,7 +51,7 @@ if __name__ == "__main__":
     # processed_datasets = raw_datasets.map(
     #     preprocess_function,
     #     batched=True,
-    #     num_proc=args.preprocessing_num_workers,
+    #     num_proc=args.preprocessing_num_workers,token
     #     remove_columns=column_names,
     #     load_from_cache_file=not args.overwrite_cache,
     #     desc="Running tokenizer on dataset",
