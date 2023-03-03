@@ -70,12 +70,16 @@ class TextDataset(Dataset):
             #self.input_ids = self.tokenizer.encode([t[0] for t in self.text])
             encoded_input = self.tokenizer(self.text)
             self.input_ids = encoded_input["input_ids"]
+            from pympler.asizeof import asizeof
+
+            def get_disc_size_gb(obj):
+                return asizeof(obj) / 8 / 1_000 / 1_000
 
             print(f"Type enc input: {type(encoded_input)}\n"
                   f"Len input ids: {len(encoded_input['input_ids'])}\n"
-                  f"Getsizeof input ids: {sys.getsizeof(self.input_ids)}\n"
-                  f"Getsizeof encoded: {sys.getsizeof(encoded_input)}\n"
-                  f"Getsizeof data(frame): {sys.getsizeof(data)}\n"
+                  f"Getsizeof input ids: {get_disc_size_gb(self.input_ids)}\n"
+                  f"Getsizeof encoded: {get_disc_size_gb(encoded_input)}\n"
+                  f"Getsizeof data(frame): {get_disc_size_gb(data)}\n"
                   f"Type input ids: {type(self.input_ids)}")
 
         print("End tokenizing")
