@@ -52,9 +52,9 @@ if __name__ == "__main__":
 
     print("saved paths")
 
-    from datasets import load_dataset
+    import datasets
     print("load datasets as raw")
-    raw_datasets = load_dataset("csv", data_files=data_files)
+    raw_datasets = datasets.load_dataset("csv", data_files=data_files)
 
     print("process datasets")
     processed_datasets = raw_datasets.map(
