@@ -15,7 +15,9 @@ def main(data_path: str):
     
     print(sys.getsizeof(text)/8/1_000_000)
     print("encoding whole dataset")
-    encoded = tokenizer(text)
+
+
+    encoded = [tokenizer(t) for t in text]
 
 
 if __name__ == "__main__":
