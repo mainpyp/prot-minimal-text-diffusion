@@ -27,7 +27,11 @@ def get_dataloader(tokenizer, data_path, batch_size, max_seq_len):
 
     while True:
         for batch in dataloader:
-            batch = tokenizer(batch)
+            #batch = tokenizer(batch)
+            print("BATCH")
+            print(batch)
+            print(type(batch))
+            print(len(batch))
             yield batch
 
 
@@ -65,26 +69,27 @@ class TextDataset(Dataset):
         #     encoded_input = self.tokenizer.batch_encode_plus(self.text)
         #     self.input_ids = [x.ids for x in encoded_input]
         
-        # else:
-        #     print("not encode_batch")
-        #     import sys
-        #     self.input_ids = self.tokenizer.encode([t[0] for t in self.text])
-        #     encoded_input = self.tokenizer(self.text)
-        #     self.input_ids = encoded_input["input_ids"]
-        #     from pympler.asizeof import asizeof
-        #
-        #     def get_disc_size_gb(obj):
-        #         return asizeof(obj) / 8 / 1_000 / 1_000
-        #
-        #     print(f"Type enc input: {type(encoded_input)}\n"
-        #           f"Len input ids: {len(encoded_input['input_ids'])}\n"
-        #           f"Getsizeof input ids: {get_disc_size_gb(encoded_input['input_ids'])}\n"
-        #           f"Getsizeof token_type_ids: {get_disc_size_gb(encoded_input['token_type_ids'])}\n"
-        #           f"Getsizeof attention_mask: {get_disc_size_gb(encoded_input['attention_mask'])}\n"
-        #           f"Getsizeof encoded: {get_disc_size_gb(encoded_input)}\n"
-        #           f"Getsizeof data(frame): {get_disc_size_gb(data)}\n"
-        #           f"Getsizeof text: {get_disc_size_gb(self.text)}\n"
-        #           f"Type input ids: {type(self.input_ids)}")
+        else:
+            print("not encode_batch")
+            import sys
+            self.input_ids = self.tokenizer.encode([t[0] for t in self.text])
+            encoded_input = self.tokenizer(self.text)
+            self.input_ids = encoded_input["input_ids"]
+
+            from pympler.asizeof import asizeof
+
+            def get_disc_size_gb(obj):
+                return asizeof(obj) / 8 / 1_000 / 1_000
+
+            print(f"Type enc input: {type(encoded_input)}\n"
+                  f"Len input ids: {len(encoded_input['input_ids'])}\n"
+                  f"Getsizeof input ids: {get_disc_size_gb(encoded_input['input_ids'])}\n"
+                  f"Getsizeof token_type_ids: {get_disc_size_gb(encoded_input['token_type_ids'])}\n"
+                  f"Getsizeof attention_mask: {get_disc_size_gb(encoded_input['attention_mask'])}\n"
+                  f"Getsizeof encoded: {get_disc_size_gb(encoded_input)}\n"
+                  f"Getsizeof data(frame): {get_disc_size_gb(data)}\n"
+                  f"Getsizeof text: {get_disc_size_gb(self.text)}\n"
+                  f"Type input ids: {type(self.input_ids)}")
         #     sys.exit(0)
 
         print("End tokenizing")
