@@ -4,6 +4,8 @@ from transformers import AutoTokenizer
 import pandas as pd
 
 def main(data_path: str):
+    print("import matplotlib")
+    import matplotlib.pyplot as plt
     print("Loading Tokenizer")
     tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
     
@@ -13,7 +15,11 @@ def main(data_path: str):
     print(f"df head:\n {df.head()}\n")
     print(f"df tail:\n {df.tail()}\n")
 
-    return 
+
+    df[0].apply(lambda x: len(x)).hist()
+    plt.savefig("test_plot.png")
+
+    return
     
     print(df.info())
     print("Converting data to list")
