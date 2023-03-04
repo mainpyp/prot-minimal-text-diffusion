@@ -64,7 +64,7 @@ if __name__ == "__main__":
         batched=True,
         num_proc=1,
         remove_columns=[],
-        load_from_cache_file=Trueg,
+        load_from_cache_file=True,
         desc="Running tokenizer on dataset",
     )
 
