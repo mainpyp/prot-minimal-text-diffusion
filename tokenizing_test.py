@@ -24,12 +24,17 @@ def main(data_path: str):
     print(df.info())
     print("Converting data to list")
     text = df[0].apply(lambda x: x.strip()).tolist()
+
+    for i, t in enumerate(text):
+        if i % 100_000 == 0:
+            print(f"At {i}, {len(text) - i} to go.")
+        tokenizer(t)
     
     print(sys.getsizeof(text)/8/1_000_000)
     print("encoding whole dataset")
-    encoded = tokenizer(text=text, max_length=512, padding=True, truncation=True)
+    #encoded = tokenizer(text=text, max_length=512, padding=True, truncation=True)
     print("encoding done")
-    print(f"{sys.getsizeof(encoded)}")
+    #print(f"{sys.getsizeof(encoded)}")
 
 
 def preprocess_function(examples):
