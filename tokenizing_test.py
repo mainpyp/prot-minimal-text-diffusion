@@ -62,9 +62,9 @@ if __name__ == "__main__":
     processed_datasets = raw_datasets.map(
         preprocess_function,
         batched=True,
-        num_proc=args.preprocessing_num_workers,
-        remove_columns=column_names,
-        load_from_cache_file=not args.overwrite_cache,
+        num_proc=1,
+        remove_columns=[],
+        load_from_cache_file=Trueg,
         desc="Running tokenizer on dataset",
     )
 
