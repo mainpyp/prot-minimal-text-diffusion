@@ -9,6 +9,11 @@ def main(data_path: str):
     
     print("Reading Data to Pandas df")
     df = pd.read_csv(data_path, sep="\t", header=None)
+
+    print(f"df head:\n {df.head()}\n")
+    print(f"df tail:\n {df.tail()}\n")
+
+    return 
     
     print(df.info())
     print("Converting data to list")
