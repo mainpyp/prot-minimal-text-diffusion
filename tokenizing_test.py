@@ -55,10 +55,14 @@ if __name__ == "__main__":
 
 
 
+
+
     print("load datasets as raw")
     raw_datasets = datasets.load_dataset("csv", data_files=paths)
 
     print("process datasets")
+    print(type(raw_datasets))
+    print(len(raw_datasets))
     processed_datasets = raw_datasets.map(
         preprocess_function,
         batched=True,
