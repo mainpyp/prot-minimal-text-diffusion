@@ -18,3 +18,4 @@ tqdm == 4.49.0
 transformers == 4.21.3
 wandb == 0.13.3
 pympler
+matplotlib
