@@ -41,8 +41,8 @@ def preprocess_function(examples):
     return model_inputs
 
 if __name__ == "__main__":
-    #data_path = "data/prot_total/prot_total.txt"
-    data_path = "data/prot_minimal/prot_minimal.txt"
+    data_path = "data/prot_total/prot_total.txt"
+    #data_path = "data/prot_minimal/prot_minimal.txt"
     main(data_path)
 
 
