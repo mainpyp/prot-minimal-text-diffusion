@@ -24,6 +24,12 @@ def main(data_path: str):
     text = df[0].apply(lambda x: x.strip()).tolist()
 
     for i, t in enumerate(text):
+
+        for x in range(10):
+            print(t[x], flush=True, end="|")
+        break
+
+        print(type(t))
         if i % 100_000 == 0:
             print(f"At {i}, {len(text) - i} to go.")
         tokenizer(t)
