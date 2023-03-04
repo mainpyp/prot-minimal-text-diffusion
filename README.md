@@ -58,7 +58,7 @@ The main idea was to retain _just enough code_ to allow training a simple diffus
 ```sh
 conda install mpi4py
 conda install pytorch torchvision torchaudio cudatoolkit=11.3 -c pytorch
-conda install -c conda-forge pytorch-gpu
+conda install -c conda-forge pytorch-gpu pympler
 conda install -c huggingface transformers
 ```
 
