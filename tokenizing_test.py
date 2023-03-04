@@ -42,37 +42,37 @@ def preprocess_function(examples):
 
 if __name__ == "__main__":
     #data_path = "data/prot_total/prot_total.txt"
-    #path = "data/prot_minimal/prot_minimal.txt"
-    #main(data_path)
+    path = "data/prot_minimal/prot_minimal.txt"
+    main(data_path)
 
 
 
-    paths = ["/mnt/home/mheinzinger/deepppi1tb/ProSST5/martins_set/data_mixed/train.csv",
-             "/mnt/home/mheinzinger/deepppi1tb/ProSST5/martins_set/data_mixed/test.csv",
-             "/mnt/home/mheinzinger/deepppi1tb/ProSST5/martins_set/data_mixed/val.csv"]
-
-    print("saved paths")
-
-
-
-
-
-    print("load datasets as raw")
-    raw_datasets = datasets.load_dataset("csv", data_files=paths)
-
-    print("process datasets")
-    print(type(raw_datasets))
-    print(len(raw_datasets))
-    processed_datasets = raw_datasets.map(
-        preprocess_function,
-        batched=True,
-        num_proc=1,
-        remove_columns=[],
-        load_from_cache_file=True,
-        desc="Running tokenizer on dataset",
-    )
-
-    print(raw_datasets)
+    # paths = ["/mnt/home/mheinzinger/deepppi1tb/ProSST5/martins_set/data_mixed/train.csv",
+    #          "/mnt/home/mheinzinger/deepppi1tb/ProSST5/martins_set/data_mixed/test.csv",
+    #          "/mnt/home/mheinzinger/deepppi1tb/ProSST5/martins_set/data_mixed/val.csv"]
+    #
+    # print("saved paths")
+    #
+    #
+    #
+    #
+    #
+    # print("load datasets as raw")
+    # raw_datasets = datasets.load_dataset("csv", data_files=paths)
+    #
+    # print("process datasets")
+    # print(type(raw_datasets))
+    # print(len(raw_datasets))
+    # processed_datasets = raw_datasets.map(
+    #     preprocess_function,
+    #     batched=True,
+    #     num_proc=1,
+    #     remove_columns=[],
+    #     load_from_cache_file=True,
+    #     desc="Running tokenizer on dataset",
+    # )
+    #
+    # print(raw_datasets)
 
 
 
