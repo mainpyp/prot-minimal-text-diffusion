@@ -16,10 +16,8 @@ def main(data_path: str):
     print(f"df tail:\n {df.tail()}\n")
 
 
-    df[0].apply(lambda x: len(x)).hist()
-    plt.savefig("test_plot.png")
-
-    return
+    # df[0].apply(lambda x: len(x)).hist()
+    # plt.savefig("test_plot.png")
     
     print(df.info())
     print("Converting data to list")
