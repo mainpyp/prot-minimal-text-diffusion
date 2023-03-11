@@ -3,7 +3,8 @@ import sys
 from transformers import AutoTokenizer
 import pandas as pd
 
-def main(data_path: str):
+
+def main_old(data_path: str):
     print("import matplotlib")
     import matplotlib.pyplot as plt
     print("Loading Tokenizer")
@@ -41,6 +42,24 @@ def main(data_path: str):
     #print(f"{sys.getsizeof(encoded)}")
 
 
+def main(data_paths: dict):
+    t = AutoTokenizer.from_pretrained("Rostlab/prot_bert")
+    from datasets import load_dataset
+
+    print("Loading datasets")
+    dataset = load_dataset("text", data_files={"train": data_paths["train"],
+                                               "test": data_paths["test"]})
+
+    print("Creating Helper Function")
+    def tokenization(example):
+        result = t(example["text"])
+        return result
+
+    print("Start Batched Tokenization")
+    d = dataset.map(tokenization, batched=True)
+    print(f"Dataset: \n{d}")
+
+
 def preprocess_function(examples):
     inputs = [ex[source_lang] for ex in examples["translation"]]
     targets = [ex[target_lang] for ex in examples["translation"]]
@@ -60,10 +79,15 @@ def preprocess_function(examples):
     model_inputs["labels"] = labels["input_ids"]
     return model_inputs
 
+
 if __name__ == "__main__":
     data_path = "data/prot_total/prot_total.txt"
     #data_path = "data/prot_minimal/prot_minimal.txt"
-    main(data_path)
+
+    paths = {"test": "../prot-minimal-text-diffusion/data/prot_minimal-test.txt",
+             "train": "../prot-minimal-text-diffusion/data/prot_minimal-train.txt"}
+
+    main(paths)
 
 
 
