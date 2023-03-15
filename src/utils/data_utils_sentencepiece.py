@@ -134,7 +134,7 @@ class TextDataset(Dataset):
         
     
     def __len__(self) -> int:
-        return len(self.text)
+        return len(self.input_ids)
 
     def __getitem__(self, i):
         out_dict = {
