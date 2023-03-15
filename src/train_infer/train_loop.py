@@ -255,7 +255,7 @@ class TrainLoop:
             last_batch = (i + self.microbatch) >= batch_size
             curr_batch_size = micro_cond[list(micro_cond.keys())[0]].shape[0]
             t, weights = self.schedule_sampler.sample(curr_batch_size, dist_util.dev())
-            # print(micro_cond.keys())
+            print(f"Micro cond keys (in forward_backward): {micro_cond.keys()}")
             compute_losses = functools.partial(
                 self.diffusion.training_losses,
                 self.ddp_model,  # this is the transformer model in DDP mode

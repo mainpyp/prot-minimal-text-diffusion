@@ -274,7 +274,7 @@ class GaussianDiffusion:
         assert (
             model_output.shape == target.shape == x_start.shape
         ), f"model_output.shape: {model_output.shape}, target.shape: {target.shape}, x_start.shape: {x_start.shape}"
-        # the usual diffusion loss
+        # the usual diffusion loss we use simple MSE (target minus output squared)
         terms["mse"] = mean_flat((target - model_output) ** 2)
         # print( terms["mse"])
         model_out_x_start = self.x0_helper(model_output, x_t, t)["pred_xstart"]

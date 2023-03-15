@@ -53,7 +53,7 @@ class TextDataset(Dataset):
 
         def tokenization(example):
             return self.tokenizer(example["text"],
-                                  max_lenght=512,
+                                  max_length=512,
                                   padding=True,
                                   truncation=True)
 
