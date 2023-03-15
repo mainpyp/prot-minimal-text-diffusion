@@ -1,6 +1,7 @@
 import logging
 import torch
 import pandas as pd
+from datasets import load_dataset
 from torch.utils.data import DataLoader, Dataset
 import torch
 from functools import partial
@@ -9,8 +10,6 @@ logging.basicConfig(level=logging.INFO)
 
 # BAD: this should not be global
 # tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
-
-
 
 
 def get_dataloader(tokenizer, data_path, batch_size, max_seq_len):
@@ -27,70 +26,98 @@ def get_dataloader(tokenizer, data_path, batch_size, max_seq_len):
 
     while True:
         for batch in dataloader:
-            #batch = tokenizer(batch)
-            print("BATCH")
-            print(batch)
-            print(type(batch))
-            print(len(batch))
             yield batch
 
 
 class TextDataset(Dataset):
     def __init__(
-        self,
-        tokenizer,
-        data_path: str,
-        has_labels: bool = False
-        ) -> None:
+            self,
+            tokenizer,
+            data_path: str,
+            has_labels: bool = False
+            ) -> None:
         super().__init__()
         self.data_path = data_path
         self.tokenizer = tokenizer
+        self.input_ids = None
         self.read_data()
         if has_labels:
             self.read_labels()
 
     def read_data(self):
         logging.info("Reading data from {}".format(self.data_path))
-        data = pd.read_csv(self.data_path, sep="\t", header=None)  # read text file
-        logging.info(f"Tokenizing {len(data)} sentences")
-        print("Start converting to lists")
-        self.text = data[0].apply(lambda x: x.strip()).tolist()
-        # encoded_input = self.tokenizer(self.questions, self.paragraphs)
-        print("End converting to lists")
-        # check if tokenizer has a method 'encode_batch'
-        print("Start tokenizing")
-        if hasattr(self.tokenizer, 'encode_batch'):
+
+        dataset = load_dataset("text", data_files=self.data_path)
+
+        logging.info("Creating helper function")
+
+        def tokenization(example):
+            return self.tokenizer(example["text"],
+                                  max_lenght=512,
+                                  padding=True,
+                                  truncation=True)
+
+        if hasattr(self.tokenizer, 'encode_batch'):  # relict of old days
             print("encode_batch")
+            self.text = dataset["text"].apply(lambda x: x.strip()).tolist()
             encoded_input = self.tokenizer.encode_batch(self.text)
             self.input_ids = [x.ids for x in encoded_input]
 
-        # elif hasattr(self.tokenizer, 'batch_encode_plus'):
-        #     print("batch_encode_plus")
-        #     encoded_input = self.tokenizer.batch_encode_plus(self.text)
-        #     self.input_ids = [x.ids for x in encoded_input]
-        
         else:
-            print("not encode_batch")
-            encoded_input = self.tokenizer(self.text)
-            self.input_ids = encoded_input["input_ids"]
+            logging.info("Start Batched Tokenization")
 
-            from pympler.asizeof import asizeof
+            data = dataset.map(tokenization,
+                               batched=True,
+                               remove_columns=[],
+                               load_from_cache_file=True,
+                               desc=f"Running tokenizer on {self.data_path}")
 
-            def get_disc_size_gb(obj):
-                return asizeof(obj) / 8 / 1_000 / 1_000
+            self.input_ids = data['train']["input_ids"]
 
-            print(f"Type enc input: {type(encoded_input)}\n"
-                  f"Len input ids: {len(encoded_input['input_ids'])}\n"
-                  f"Getsizeof input ids: {get_disc_size_gb(encoded_input['input_ids'])}\n"
-                  f"Getsizeof token_type_ids: {get_disc_size_gb(encoded_input['token_type_ids'])}\n"
-                  f"Getsizeof attention_mask: {get_disc_size_gb(encoded_input['attention_mask'])}\n"
-                  f"Getsizeof encoded: {get_disc_size_gb(encoded_input)}\n"
-                  f"Getsizeof data(frame): {get_disc_size_gb(data)}\n"
-                  f"Getsizeof text: {get_disc_size_gb(self.text)}\n"
-                  f"Type input ids: {type(self.input_ids)}")
-        #     sys.exit(0)
 
-        print("End tokenizing")
+    # def read_data(self):
+    #     logging.info("Reading data from {}".format(self.data_path))
+    #     data = pd.read_csv(self.data_path, sep="\t", header=None)  # read text file
+    #     logging.info(f"Tokenizing {len(data)} sentences")
+    #     print("Start converting to lists")
+    #     self.text = data[0].apply(lambda x: x.strip()).tolist()
+    #     # encoded_input = self.tokenizer(self.questions, self.paragraphs)
+    #     print("End converting to lists")
+    #     # check if tokenizer has a method 'encode_batch'
+    #     print("Start tokenizing")
+    #     if hasattr(self.tokenizer, 'encode_batch'):
+    #         print("encode_batch")
+    #         encoded_input = self.tokenizer.encode_batch(self.text)
+    #         self.input_ids = [x.ids for x in encoded_input]
+    #
+    #     # elif hasattr(self.tokenizer, 'batch_encode_plus'):
+    #     #     print("batch_encode_plus")
+    #     #     encoded_input = self.tokenizer.batch_encode_plus(self.text)
+    #     #     self.input_ids = [x.ids for x in encoded_input]
+    #
+    #     else:
+    #         print("not encode_batch")
+    #         encoded_input = self.tokenizer(self.text)
+    #         self.input_ids = encoded_input["input_ids"]
+    #
+    #         from pympler.asizeof import asizeof
+    #
+    #         def get_disc_size_gb(obj):
+    #             return asizeof(obj) / 8 / 1_000 / 1_000
+    #
+    #         print(f"Type enc input: {type(encoded_input)}\n"
+    #               f"Len input ids: {len(encoded_input['input_ids'])}\n"
+    #               f"Getsizeof input ids: {get_disc_size_gb(encoded_input['input_ids'])}\n"
+    #               f"Getsizeof token_type_ids: {get_disc_size_gb(encoded_input['token_type_ids'])}\n"
+    #               f"Getsizeof attention_mask: {get_disc_size_gb(encoded_input['attention_mask'])}\n"
+    #               f"Getsizeof encoded: {get_disc_size_gb(encoded_input)}\n"
+    #               f"Getsizeof data(frame): {get_disc_size_gb(data)}\n"
+    #               f"Getsizeof text: {get_disc_size_gb(self.text)}\n"
+    #               f"Type input ids: {type(self.input_ids)}")
+    #     #     sys.exit(0)
+    #
+    #     print("End tokenizing")
+
 
     def read_labels(self):
         self.labels = pd.read_csv(self.data_path, sep="\t", header=None)[1].tolist()
