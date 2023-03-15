@@ -43,41 +43,29 @@ def main_old(data_path: str):
 
 
 def main(data_paths: dict):
-    t = AutoTokenizer.from_pretrained("Rostlab/prot_bert")
+    tokenizer = AutoTokenizer.from_pretrained("Rostlab/prot_bert")
     from datasets import load_dataset
 
     print("Loading datasets")
     dataset = load_dataset("text", data_files={"train": data_paths["train"],
                                                "test": data_paths["test"]})
 
+    dataset = load_dataset("text", data_files=data_paths["test"])
+    print(f"Dataset: {dataset['train']['text']}")
+
     print("Creating Helper Function")
     def tokenization(example):
-        result = t(example["text"])
-        return result
+        return tokenizer(example["text"], max_length=512, padding=True, truncation=True)
 
     print("Start Batched Tokenization")
-    d = dataset.map(tokenization, batched=True)
-    print(f"Dataset: \n{d}")
+    # https://huggingface.co/docs/datasets/v2.10.0/en/package_reference/main_classes#datasets.Dataset.map
+    d = dataset.map(tokenization, batched=True,
+                    num_proc=1,
+                    remove_columns=[],
+                    load_from_cache_file=True,
+                    desc="Running tokenizer on dataset")
 
-
-def preprocess_function(examples):
-    inputs = [ex[source_lang] for ex in examples["translation"]]
-    targets = [ex[target_lang] for ex in examples["translation"]]
-    inputs = [prefix + inp for inp in inputs]
-    model_inputs = tokenizer(inputs, max_length=512, padding=True, truncation=True)
-
-    # Tokenize targets with the `text_target` keyword argument
-    labels = tokenizer(text_target=targets, max_length=512, padding=True, truncation=True)
-
-    # If we are padding here, replace all tokenizer.pad_token_id in the labels by -100 when we want to ignore
-    # padding in the loss.
-    if padding == "max_length" and False:
-        labels["input_ids"] = [
-            [(l if l != tokenizer.pad_token_id else -100) for l in label] for label in labels["input_ids"]
-        ]
-
-    model_inputs["labels"] = labels["input_ids"]
-    return model_inputs
+    print(f"Dataset: \n{len(d['train']['input_ids'])}")
 
 
 if __name__ == "__main__":
@@ -87,36 +75,15 @@ if __name__ == "__main__":
     paths = {"test": "../prot-minimal-text-diffusion/data/prot_minimal-test.txt",
              "train": "../prot-minimal-text-diffusion/data/prot_minimal-train.txt"}
 
+    # paths = {"test": "../prot-minimal-text-diffusion/data/prot_total-test.txt",
+    #          "train": "../prot-minimal-text-diffusion/data/prot_total-train.txt"}
+
     main(paths)
-
-
 
     # paths = ["/mnt/home/mheinzinger/deepppi1tb/ProSST5/martins_set/data_mixed/train.csv",
     #          "/mnt/home/mheinzinger/deepppi1tb/ProSST5/martins_set/data_mixed/test.csv",
     #          "/mnt/home/mheinzinger/deepppi1tb/ProSST5/martins_set/data_mixed/val.csv"]
-    #
-    # print("saved paths")
-    #
-    #
-    #
-    #
-    #
-    # print("load datasets as raw")
-    # raw_datasets = datasets.load_dataset("csv", data_files=paths)
-    #
-    # print("process datasets")
-    # print(type(raw_datasets))
-    # print(len(raw_datasets))
-    # processed_datasets = raw_datasets.map(
-    #     preprocess_function,
-    #     batched=True,
-    #     num_proc=1,
-    #     remove_columns=[],
-    #     load_from_cache_file=True,
-    #     desc="Running tokenizer on dataset",
-    # )
-    #
-    # print(raw_datasets)
+
 
 
 
