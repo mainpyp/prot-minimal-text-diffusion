@@ -1,6 +1,6 @@
 cd repositories/prot-minimal-text-diffusion/
 export PYTHONPATH=".:../:.:src"
-export HF_DATASETS_CACHE="/mnt/projects/henkel/.cache/"
+export HF_DATASETS_CACHE="/mnt/project/henkel/.cache/"
 conda activate henkel_diffu
 bash scripts/run_train.sh prot_total 0 True True   False 50
 
