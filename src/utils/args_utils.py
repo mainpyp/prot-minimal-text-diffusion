@@ -23,7 +23,7 @@ def create_argparser():
         fp16_scale_growth=1e-3,
         seed=101,
         gradient_clipping=-1.0,
-        eval_interval=2000,
+        eval_interval=500,
         checkpoint_path="diff_models",
         train_txt_path="data/quotes_train.txt",
         val_txt_path="data/quotes_valid.txt",
